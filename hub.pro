@@ -2,10 +2,15 @@ QT += core widgets network
 requires(qtConfig(combobox))
 
 HEADERS       = Server/Inc/client.hh \
-                Server/Inc/server.hh 
+                Server/Inc/server.hh \
+                Mainapp/Inc/player.hh \
+                Mainapp/Inc/main_app.hh
                 
 SOURCES       = Server/Src/client.cpp \
                 Server/Src/server.cpp \
+                Mainapp/Src/player.cpp \
+                Mainapp/Src/main_app_a.cpp \
+                Mainapp/Src/main_app_b.cpp \
                 Mainapp/Src/main.cpp
 
 release: DESTDIR = Bin
