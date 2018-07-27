@@ -17,6 +17,7 @@ void Server::Send_message(QString data, QString id){
   foreach(Client *c, clients){
     if(c->Id() == id){
       c->Send_message(data);
+      qDebug() << "Sen: " << data;
       break;
     }
   }
@@ -25,6 +26,8 @@ void Server::Send_message(QString data, QString id){
 QString Server::Pull_message(){
   if(messages.isEmpty()) return "";
   QString tmp = messages.first();
+
+  qDebug() << "Rec: " << tmp;
   messages.removeFirst();
   return tmp;
 }

@@ -26,6 +26,7 @@ void Main_app::Execute_message(QString msg){
   if(command=="SET_NAME") Set_player_name(parameters[0], sender_id);
   if(command=="FREE_ROLES") Show_free_roles(sender_id);
   if(command=="SET_ROLE") Set_player_role(parameters[0], sender_id);
+  if(command=="SET_PHASE") Set_player_phase(parameters[0], sender_id);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +61,38 @@ void Main_app::Set_player_role(QString new_role, QString sender_id){
     P(sender_id)->Set_role(new_role);
     Send_message("H_|_SET_ROLE_|_" + new_role , sender_id);
   }
-  else Show_free_roles(sender_id);
+  foreach(Player *P, players){
+    Show_free_roles(P->Id());
+  }
+}
+
+void Main_app::Set_player_phase(QString new_phase, QString sender_id){
+  qint32 iter=0;
+  P(sender_id)->Set_phase(new_phase);
+  Send_message("H_|_SET_PHASE_|_" + new_phase , sender_id);
+
+  if(new_phase=="READY_TO_START"){
+    foreach(Player *P, players){
+      if(P->Phase()==new_phase) iter++;
+    }
+    if(iter == nop){ Start_game(); }
+  }
+}
+
+void Main_app::Start_game(){
+  qDebug() << "START GAME";
+  QStringList ToSend;
+  
+  foreach(Player *P, players){
+    P->randStart();
+    ToSend = P->toSend();
+    foreach(QString S, ToSend){
+      Send_message(S , P->Id());
+    }
+    Send_message("H_|_SET_PHASE_|_MOVE" , P->Id());
+    Send_message("H_|_START_GAME" , P->Id());
+  }
+
 }
 
 

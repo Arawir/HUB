@@ -33,6 +33,8 @@ public:
   void Set_player_name(QString new_name, QString sender_id);
   void Set_player_status(QString new_stat, QString sender_id);
   void Set_player_phase(QString new_phase, QString sender_id);
+
+  void Start_game();
   
   void Execute_message(QString msg);                                       
 

@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
   Server *S = new Server();
   Main_app *M = new Main_app();
   M->Connect_to_server(S);
-  M->Set_nop(6);
+  M->Set_nop(2);
   
   return app.exec();
 }
